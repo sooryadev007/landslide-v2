@@ -21,14 +21,20 @@ const SignIn = () => {
         body: JSON.stringify({ username, password }),
       });
 
+      const result = await res.json();
+
       if (res.ok) {
-        // Clear the form and redirect to a protected page or dashboard
+        // Clear the form
         setUsername("");
         setPassword("");
-        router.push("/dashboard"); // Redirect to a protected route or dashboard
+        // Redirect based on status
+        if (result.status == "admin") {
+          router.push("/admin");
+        } else if (result.status == "user") {
+          router.push("/dashboard");
+        }
       } else {
-        const { error } = await res.json();
-        setError(error); // Set error message from response
+        setError(result.error || "Failed to sign in. Please try again."); // Set error message from response
       }
     } catch (err) {
       setError("Failed to sign in. Please try again."); // Generic error message
@@ -48,7 +54,7 @@ const SignIn = () => {
             Username:
           </label>
           <input
-            type="username"
+            type="text"
             id="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}

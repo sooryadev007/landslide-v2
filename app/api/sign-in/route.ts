@@ -33,11 +33,18 @@ export async function POST(request: NextRequest) {
     }
 
     // Authentication successful
-    return new NextResponse(JSON.stringify({ message: "Sign-in successful" }), {
-      status: 200,
-    });
+    if (user.isAdmin) {
+      return new NextResponse(
+        JSON.stringify({ status: "admin" }), // Return "admin" if the user is an admin
+        { status: 200 }
+      );
+    } else {
+      return new NextResponse(
+        JSON.stringify({ status: "user" }), // Return "user" if the user is not an admin
+        { status: 200 }
+      );
+    }
   } catch (error) {
-    // Type guard to check if error is an instance of Error
     if (error instanceof Error) {
       console.error("Error during sign-in:", error.message);
       return new NextResponse(
@@ -45,7 +52,6 @@ export async function POST(request: NextRequest) {
         { status: 500 }
       );
     } else {
-      // Handle unexpected errors
       console.error("Unexpected error:", error);
       return new NextResponse(
         JSON.stringify({ error: "An unexpected error occurred." }),

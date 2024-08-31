@@ -37,12 +37,21 @@ export default function Home() {
           </div>
           <div>
             <Link
+              href="/feasibility"
+              className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-4 rounded"
+            >
+              Feasibility Check
+            </Link>
+          </div>
+          <div>
+            <Link
               href="/safety"
               className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
             >
               Safety Tips
             </Link>
           </div>
+          <div></div>
         </div>
       </main>
 

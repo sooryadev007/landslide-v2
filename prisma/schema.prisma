@@ -19,6 +19,7 @@ model User {
   password String
   number   Int     @unique
   pin       Int     
+  isAdmin   Boolean @default(false)
 
   @@map("users")
 }
