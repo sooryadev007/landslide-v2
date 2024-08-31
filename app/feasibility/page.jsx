@@ -39,7 +39,7 @@ const LandFeasibilityForm = () => {
         <div className="mb-4">
           <label
             htmlFor="pinCode"
-            className="block text-sm font-medium text-gray-700 mb-2"
+            className="block text-sm font-medium text-black mb-2"
           >
             Enter PIN Code:
           </label>
@@ -48,7 +48,7 @@ const LandFeasibilityForm = () => {
             id="pinCode"
             value={pinCode}
             onChange={handlePinCodeChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full text-black px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="Enter PIN Code"
           />
         </div>
@@ -57,7 +57,7 @@ const LandFeasibilityForm = () => {
         <div className="mb-4">
           <label
             htmlFor="subCode"
-            className="block text-sm font-medium text-gray-700 mb-2"
+            className="block text-sm font-medium text-black mb-2"
           >
             Enter Sub-Code (optional):
           </label>
@@ -66,7 +66,7 @@ const LandFeasibilityForm = () => {
             id="subCode"
             value={subCode}
             onChange={handleSubCodeChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 border text-black border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="Enter Sub-Code"
           />
         </div>
