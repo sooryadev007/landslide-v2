@@ -7,6 +7,69 @@ const LandFeasibilityForm = () => {
   const [subCode, setSubCode] = useState("");
   const [feasibility, setFeasibility] = useState(null);
 
+  const pinCodesData = {
+    670001: {
+      "0001A": {
+        soilQuality: "Clayey",
+        description: "Heavy, water-retentive soil.",
+        landslideHistory: "Reported in 2001.",
+      },
+      "0002B": {
+        soilQuality: "Sandy",
+        description: "Loose, well-drained soil.",
+        landslideHistory: "No significant history.",
+      },
+    },
+    670002: {
+      "0003C": {
+        soilQuality: "Loamy",
+        description: "Fertile, well-balanced soil.",
+        landslideHistory: "Reported in 1995.",
+      },
+      "0004D": {
+        soilQuality: "Silty",
+        description: "Smooth, holds water moderately.",
+        landslideHistory: "No significant history.",
+      },
+    },
+    670003: {
+      "0005E": {
+        soilQuality: "Gravelly",
+        description: "Coarse, well-drained soil.",
+        landslideHistory: "Reported in 2010.",
+      },
+      "0006F": {
+        soilQuality: "Chalky",
+        description: "Alkaline soil, rich in calcium.",
+        landslideHistory: "No significant history.",
+      },
+    },
+    670004: {
+      "0007G": {
+        soilQuality: "Peaty",
+        description: "Acidic, high in organic matter.",
+        landslideHistory: "Reported in 1990.",
+      },
+      "0008H": {
+        soilQuality: "Clay Loam",
+        description: "Balanced, fertile soil.",
+        landslideHistory: "No significant history.",
+      },
+    },
+    670005: {
+      "0009I": {
+        soilQuality: "Sandy Loam",
+        description: "Good drainage, easy to work.",
+        landslideHistory: "Reported in 2015.",
+      },
+      "0010J": {
+        soilQuality: "Loam",
+        description: "Rich, fertile soil.",
+        landslideHistory: "No significant history.",
+      },
+    },
+  };
+
   const handlePinCodeChange = (event) => {
     setPinCode(event.target.value);
   };
@@ -16,15 +79,21 @@ const LandFeasibilityForm = () => {
   };
 
   const checkFeasibility = async () => {
-    try {
-      const response = await axios.post("/api/check-feasibility", {
-        pinCode,
-        subCode,
-      });
-      setFeasibility(response.data.feasibility);
-    } catch (error) {
-      console.error("Error checking feasibility:", error);
-      setFeasibility("Failed to check feasibility. Please try again later.");
+    const pinCodeInfo = pinCodesData[pinCode];
+    if (pinCodeInfo) {
+      const subCodeInfo = pinCodeInfo[subCode];
+      if (subCodeInfo) {
+        const { soilQuality, description, landslideHistory } = subCodeInfo;
+        const feasibilityMessage =
+          landslideHistory === "No significant history."
+            ? `Construction is possible. Use specific materials like reinforced concrete for stability. Soil Type: ${soilQuality}. Description: ${description}`
+            : `Danger to construct any building in this area due to a reported landslide. Soil Type: ${soilQuality}. Description: ${description} Landslide History: ${landslideHistory}`;
+        setFeasibility(feasibilityMessage);
+      } else {
+        setFeasibility("Sub-code not found for this PIN Code.");
+      }
+    } else {
+      setFeasibility("PIN Code not found.");
     }
   };
 
@@ -39,7 +108,7 @@ const LandFeasibilityForm = () => {
         <div className="mb-4">
           <label
             htmlFor="pinCode"
-            className="block text-sm font-medium text-black mb-2"
+            className="block text-sm font-medium text-gray-700 mb-2"
           >
             Enter PIN Code:
           </label>
@@ -48,7 +117,7 @@ const LandFeasibilityForm = () => {
             id="pinCode"
             value={pinCode}
             onChange={handlePinCodeChange}
-            className="w-full text-black px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black" // Text color set to black
             placeholder="Enter PIN Code"
           />
         </div>
@@ -57,7 +126,7 @@ const LandFeasibilityForm = () => {
         <div className="mb-4">
           <label
             htmlFor="subCode"
-            className="block text-sm font-medium text-black mb-2"
+            className="block text-sm font-medium text-gray-700 mb-2"
           >
             Enter Sub-Code (optional):
           </label>
@@ -66,7 +135,7 @@ const LandFeasibilityForm = () => {
             id="subCode"
             value={subCode}
             onChange={handleSubCodeChange}
-            className="w-full px-3 py-2 border text-black border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-black" // Text color set to black
             placeholder="Enter Sub-Code"
           />
         </div>
